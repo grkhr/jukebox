@@ -79,8 +79,10 @@ def sample_single_window(zs, labels, sampling_kwargs, level, prior, start, hps):
 # Sample total_length tokens at level=level with hop_length=hop_length
 def sample_level(zs, labels, sampling_kwargs, level, prior, total_length, hop_length, hps):
     print_once(f"Sampling level {level}")
+    ll = get_starts(total_length, prior.n_ctx, hop_length)
     if total_length >= prior.n_ctx:
-        for start in get_starts(total_length, prior.n_ctx, hop_length):
+        for ii, start in enumerate(get_starts(total_length, prior.n_ctx, hop_length)):
+            print('*', ii, '/', len(ll), '*')
             zs = sample_single_window(zs, labels, sampling_kwargs, level, prior, start, hps)
     else:
         zs = sample_partial_window(zs, labels, sampling_kwargs, level, prior, total_length, hps)
