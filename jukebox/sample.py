@@ -89,7 +89,8 @@ def sample_level(zs, labels, sampling_kwargs, level, prior, total_length, hop_le
 # Sample multiple levels
 def _sample(zs, labels, sampling_kwargs, priors, sample_levels, hps):
     alignments = None
-    for level in reversed(sample_levels):
+    for iii, level in enumerate(reversed(sample_levels)):
+        print(iii, '/', len(sample_levels))
         prior = priors[level]
         prior.cuda()
         empty_cache()
@@ -126,6 +127,7 @@ def ancestral_sample(labels, sampling_kwargs, priors, hps):
 # Upsample given already generated upper-level codes
 def upsample(zs, labels, sampling_kwargs, priors, hps):
     sample_levels = list(range(len(priors) - 1))
+    print('SAMPLE LEVELS:', len(sample_levels))
     zs = _sample(zs, labels, sampling_kwargs, priors, sample_levels, hps)
     return zs
 
