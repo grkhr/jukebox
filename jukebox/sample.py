@@ -90,7 +90,7 @@ def sample_level(zs, labels, sampling_kwargs, level, prior, total_length, hop_le
 def _sample(zs, labels, sampling_kwargs, priors, sample_levels, hps):
     alignments = None
     for iii, level in enumerate(reversed(sample_levels)):
-        print(iii, '/', len(sample_levels))
+        print('***', iii, '/', len(sample_levels), '***')
         prior = priors[level]
         prior.cuda()
         empty_cache()
