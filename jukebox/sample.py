@@ -82,7 +82,7 @@ def sample_level(zs, labels, sampling_kwargs, level, prior, total_length, hop_le
     ll = get_starts(total_length, prior.n_ctx, hop_length)
     if total_length >= prior.n_ctx:
         for ii, start in enumerate(get_starts(total_length, prior.n_ctx, hop_length)):
-            print('*', ii, '/', len(ll), '*')
+            print('*', ii + 1, '/', len(ll), '*')
             zs = sample_single_window(zs, labels, sampling_kwargs, level, prior, start, hps)
     else:
         zs = sample_partial_window(zs, labels, sampling_kwargs, level, prior, total_length, hps)
@@ -92,7 +92,7 @@ def sample_level(zs, labels, sampling_kwargs, level, prior, total_length, hop_le
 def _sample(zs, labels, sampling_kwargs, priors, sample_levels, hps):
     alignments = None
     for iii, level in enumerate(reversed(sample_levels)):
-        print('***', iii, '/', len(sample_levels), '***')
+        print('***', iii + 1, '/', len(sample_levels), '***')
         prior = priors[level]
         prior.cuda()
         empty_cache()
